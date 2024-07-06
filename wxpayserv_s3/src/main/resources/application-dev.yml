@@ -1,0 +1,15 @@
+spring:
+  messages:
+    encoding: UTF-8
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: UTF-8
+request:
+  encrykey: abcdefgabcdefg12
+  appid: 12331313
+  secretcode: 32qweqweq
+  granttype: authorization_code
+  openidurl: https://api.weixin.qq.com/sns/jscode2session
+logging:
+  config: classpath:/log/logback-spring.xml

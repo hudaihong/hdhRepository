@@ -1,0 +1,9 @@
+spring:
+  application:
+  name: wxpayserv_s3
+  profiles:
+    active: dev
+
+
+
+

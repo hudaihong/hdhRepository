@@ -1,0 +1,106 @@
+2024-07-05 17:36:27.663 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 16748 (F:\2024\hproj\webpro\wxpayserv_s3\target\classes started by Administrator in F:\2024\hproj\webpro)
+2024-07-05 17:36:27.688 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 17:36:29.020 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 17:36:29.036 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 17:36:29.037 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 17:36:29.116 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 17:36:29.117 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 1321 ms
+2024-07-05 17:36:29.623 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java start 243] - Tomcat started on port 8081 (http) with context path '/'
+2024-07-05 17:36:29.636 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarted 56] - Started WxpayservS3Application in 3.174 seconds (process running for 4.309)
+2024-07-05 17:36:53.186 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-05 17:36:53.187 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 532] - Initializing Servlet 'dispatcherServlet'
+2024-07-05 17:36:53.190 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 554] - Completed initialization in 3 ms
+2024-07-05 17:38:57.868 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 17344 (F:\2024\hproj\webpro\wxpayserv_s3\target\classes started by Administrator in F:\2024\hproj\webpro)
+2024-07-05 17:38:57.874 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 17:38:59.350 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 17:38:59.376 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 17:38:59.377 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 17:38:59.452 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 17:38:59.453 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 1440 ms
+2024-07-05 17:38:59.958 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java start 243] - Tomcat started on port 8081 (http) with context path '/'
+2024-07-05 17:38:59.972 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarted 56] - Started WxpayservS3Application in 3.291 seconds (process running for 4.729)
+2024-07-05 17:39:03.517 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-05 17:39:03.518 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 532] - Initializing Servlet 'dispatcherServlet'
+2024-07-05 17:39:03.522 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 554] - Completed initialization in 3 ms
+2024-07-05 17:40:04.911 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 3244 (F:\2024\hproj\webpro\wxpayserv_s3\target\classes started by Administrator in F:\2024\hproj\webpro)
+2024-07-05 17:40:04.916 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 17:40:06.286 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 17:40:06.306 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 17:40:06.307 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 17:40:06.381 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 17:40:06.381 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 1345 ms
+2024-07-05 17:40:06.461 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext [AbstractApplicationContext.java refresh 632] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openID': Injection of autowired dependencies failed
+2024-07-05 17:40:06.465 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Stopping service [Tomcat]
+2024-07-05 17:40:06.483 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger [ConditionEvaluationReportLogger.java logMessage 82] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-05 17:40:06.512 [main] ERROR o.s.boot.SpringApplication [SpringApplication.java reportFailure 859] - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'openID': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1421)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
+	at com.e_acic.wxpayserv_s3.WxpayservS3Application.main(WxpayservS3Application.java:11)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'wxrequest.appid' in value "${wxrequest.appid}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:964)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508)
+	... 17 common frames omitted
+2024-07-05 17:48:33.948 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 18408 (F:\2024\hproj\webpro\wxpayserv_s3\target\classes started by Administrator in F:\2024\hproj\webpro)
+2024-07-05 17:48:33.958 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 17:48:35.355 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 17:48:35.371 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 17:48:35.371 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 17:48:35.440 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 17:48:35.441 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 1350 ms
+2024-07-05 17:48:35.955 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java start 243] - Tomcat started on port 8081 (http) with context path '/'
+2024-07-05 17:48:35.973 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarted 56] - Started WxpayservS3Application in 3.165 seconds (process running for 4.318)
+2024-07-05 17:48:41.791 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-05 17:48:41.792 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 532] - Initializing Servlet 'dispatcherServlet'
+2024-07-05 17:48:41.794 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 554] - Completed initialization in 1 ms
+2024-07-05 19:04:57.304 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 2000 (E:\proj\webpro\wxpayserv_s3\target\classes started by Administrator in E:\proj\webpro)
+2024-07-05 19:04:57.306 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 19:04:57.791 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 19:04:57.802 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 19:04:57.803 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 19:04:57.832 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 19:04:57.832 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 503 ms
+2024-07-05 19:04:58.032 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java start 243] - Tomcat started on port 8081 (http) with context path '/'
+2024-07-05 19:04:58.037 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarted 56] - Started WxpayservS3Application in 1.076 seconds (process running for 1.67)
+2024-07-05 19:05:33.111 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-05 19:05:33.112 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 532] - Initializing Servlet 'dispatcherServlet'
+2024-07-05 19:05:33.112 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 554] - Completed initialization in 0 ms
+2024-07-05 19:06:41.192 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarting 50] - Starting WxpayservS3Application using Java 17 with PID 3296 (E:\proj\webpro\wxpayserv_s3\target\classes started by Administrator in E:\proj\webpro)
+2024-07-05 19:06:41.194 [main] INFO  c.e.w.WxpayservS3Application [SpringApplication.java logStartupProfileInfo 660] - The following 1 profile is active: "dev"
+2024-07-05 19:06:41.662 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java initialize 111] - Tomcat initialized with port 8081 (http)
+2024-07-05 19:06:41.669 [main] INFO  o.a.catalina.core.StandardService [DirectJDKLog.java log 173] - Starting service [Tomcat]
+2024-07-05 19:06:41.669 [main] INFO  o.a.catalina.core.StandardEngine [DirectJDKLog.java log 173] - Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-05 19:06:41.698 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring embedded WebApplicationContext
+2024-07-05 19:06:41.699 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext [ServletWebServerApplicationContext.java prepareWebApplicationContext 296] - Root WebApplicationContext: initialization completed in 483 ms
+2024-07-05 19:06:41.884 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer [TomcatWebServer.java start 243] - Tomcat started on port 8081 (http) with context path '/'
+2024-07-05 19:06:41.889 [main] INFO  c.e.w.WxpayservS3Application [StartupInfoLogger.java logStarted 56] - Started WxpayservS3Application in 1.027 seconds (process running for 1.362)
+2024-07-05 19:06:48.348 [http-nio-8081-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] [DirectJDKLog.java log 173] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-05 19:06:48.348 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 532] - Initializing Servlet 'dispatcherServlet'
+2024-07-05 19:06:48.349 [http-nio-8081-exec-1] INFO  o.s.web.servlet.DispatcherServlet [FrameworkServlet.java initServletBean 554] - Completed initialization in 1 ms
