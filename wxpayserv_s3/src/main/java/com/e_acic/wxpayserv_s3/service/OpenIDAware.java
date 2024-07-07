@@ -13,15 +13,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
 @Slf4j
-public class UserProfile{
+public class OpenIDAware {
     @Autowired
     private  JdbcTemplate jdbcTemplate;
     @Transactional
@@ -47,6 +50,8 @@ public class UserProfile{
   `deal_flag` tinyint DEFAULT '0' COMMENT '是否正在处理此用户的支付，为true表示正在处理',
     * */
     @Transactional
+
+    //存在则修改，不存在则新增
     public Boolean CreateUser(UserInfo userInfo){
         try {
             if (jdbcTemplate == null){
@@ -58,5 +63,29 @@ public class UserProfile{
             log.error(e.toString());
         }
         return false;
+    }
+
+    public String GetUserByToken(String token){
+        String result = "";
+        try {
+            if (jdbcTemplate == null){
+                jdbcTemplate = ApplicationContextHelper.applicationContext.getBean(JdbcTemplate.class);
+                SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet("select openid,in_time from wx.wx_user  where token=?",token);
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                LocalDateTime localDateTime = timestamp.toLocalDateTime().minusHours(2);
+
+                while(sqlRowSet.next()) {
+                    timestamp = sqlRowSet.getTimestamp("in_time");
+                    //token超过2小时时效,重新请求
+                    if (timestamp.compareTo(Timestamp.valueOf(localDateTime)) <0 ){
+                        return "";
+                    }
+                    result += "{\"openid\":\"" + sqlRowSet.getString("openid") + "\",\"in_time\":\"" + sqlRowSet.getTimestamp("in_time").toString() + "\"}";
+                }
+            }
+        } catch (BeansException e) {
+            log.error(e.toString());
+        }
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package com.e_acic.wxpayserv_s3.service;
 import com.e_acic.wxpayserv_s3.bean.UserInfo;
 import com.e_acic.wxpayserv_s3.utils.Helper;
 import com.e_acic.wxpayserv_s3.utils.Instance;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+
+
 
 
 @RestController
@@ -122,7 +125,8 @@ public class OpenID{
             String params = "appid=" + appid + "&secret=" + secretKey + "&js_code=" + code + "&grant_type=" + grantType;
             result = Instance.helper.httpsRequest(openIDUrl,"get",null);
             if ((result != null) || (result.length() > 0)) {
-
+                WxOpenIDResp wxOpenIDResp = new Gson().fromJson(result,WxOpenIDResp.class);
+                result = wxOpenIDResp.getRespToWxApp();
             }
         } else if ((token != null) || (token.length() >0)) { //后台查询token
 
