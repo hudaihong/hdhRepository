@@ -1,5 +1,6 @@
 package com.e_acic.wxpayserv_s3.service;
 
+import com.e_acic.wxpayserv_s3.utils.Instance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -21,20 +22,26 @@ public class OpenID {
     private ConfigurableEnvironment enviroment;
 
 
-
-
     @RequestMapping("/getopenid")
     //接收小程序发送的code(加密),向微信请求并返回加密的openid
-    public String getOpenID(String code) {
+    public String getOpenID(String code,String token) {
+        String result = null;
+//          初次登录，需要向微信服务器获取openid
+        if ((code != null) && (code.length() >0))  {
+            String appid = enviroment.getProperty("request.appid");
+            String secretKey = enviroment.getProperty("request.secretcode");
+            String grantType = enviroment.getProperty("request.granttype");
+            String openIDUrl = enviroment.getProperty("request.openidurl");
+            String params = "appid=" + appid + "&secret=" + secretKey + "&js_code=" + code + "&grant_type=" + grantType;
+            result = Instance.helper.httpsRequest(openIDUrl,"get",null);
+            if ((result != null) || (result.length() > 0)) {
 
+            }
+        } else if ((token != null) || (token.length() >0)) { //后台查询token
 
-//        String appId = appid;
-        String appid = enviroment.getProperty("request.appid");
-        String secretKey = enviroment.getProperty("request.secretcode");
-        String grantType = enviroment.getProperty("request.granttype");
-        String openIDUrl = enviroment.getProperty("request.openidurl");
-        String params = "appid=" + appid + "&secret=" + secretKey + "&js_code=" + code + "&grant_type=" + grantType;
-        return params;
+        }
+
+        return result;
         /*   String sr = req.sendGet(openIDUrl, params);
         JSONObject json = JSONObject.fromObject(sr);
 

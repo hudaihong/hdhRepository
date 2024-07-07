@@ -1,5 +1,7 @@
 package com.e_acic.wxpayserv_s3.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,6 +19,8 @@ import java.util.Base64;
 /*
 工具模块，加解密
 * */
+
+@Slf4j
 public class Helper {
     private Helper() {
     }
@@ -42,24 +46,30 @@ public class Helper {
     /**
      * 加密
      */
-    public  String Encrypt(String sSrc, String sKey) throws Exception {
+    public  String Encrypt(String sSrc, String sKey)  {
         if (sKey == null) {
-            System.out.print("Key为空null");
+            log.error("Key为空null");
             return null;
         }
 
         // 判断Key是否为16位
         if (sKey.length() != 16) {
-            System.out.print("Key长度不是16位");
+            log.error("Key长度不是16位");
             return null;
         }
-        byte[] raw = sKey.getBytes("utf-8");
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");//"算法/模式/补码方式"
-        IvParameterSpec iv = new IvParameterSpec(sKey.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-        byte[] encrypted = cipher.doFinal(sSrc.getBytes());
-        return Base64.getEncoder().encodeToString(encrypted);//此处使用BASE64做转码功能，同时能起到2次加密的作用。
+        try {
+            byte[] raw = sKey.getBytes("utf-8");
+            SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");//"算法/模式/补码方式"
+            IvParameterSpec iv = new IvParameterSpec(sKey.getBytes());//使用CBC模式，需要一个向量iv，可增加加密算法的强度
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+            byte[] encrypted = cipher.doFinal(sSrc.getBytes());
+            return Base64.getEncoder().encodeToString(encrypted);//此处使用BASE64做转码
+        } catch (Exception e) {
+            log.error(e.toString());
+            return null;
+        }
+
     }
 
 
@@ -67,33 +77,29 @@ public class Helper {
      * 解密
      */
     public  String Decrypt(String sSrc, String sKey)  {
-        try {
+
             // 判断Key是否正确
             if (sKey == null) {
-                System.out.print("Key为空null");
+                log.error("Key为空null");
                 return null;
             }
             // 判断Key是否为16位
             if (sKey.length() != 16) {
-                System.out.print("Key长度不是16位");
+                log.error("Key长度不是16位");
                 return null;
             }
+        try {
             byte[] raw = sKey.getBytes("utf-8");
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             IvParameterSpec iv = new IvParameterSpec(sKey.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = Base64.getDecoder().decode(sSrc);//先用base64解密
-            try {
-                byte[] original = cipher.doFinal(encrypted1);
-                String originalString = new String(original,"utf-8");
-                return originalString;
-            } catch (Exception e) {
-                System.out.println(e.toString());
-                return null;
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+            byte[] original = cipher.doFinal(encrypted1);
+            String originalString = new String(original,"utf-8");
+            return originalString;
+        } catch (Exception e) {
+            log.error(e.toString());
             return null;
         }
     }
@@ -103,7 +109,7 @@ public class Helper {
     * */
     public  String httpsRequest(String requestUrl, String requestMethod, String outputStr)  {
         // 初始化一个json对象
-        String result = "";
+        String result = null;
 
         // 创建SSLContext对象，并使用我们指定的信任管理器初始化
 
@@ -132,7 +138,7 @@ public class Helper {
                 _conn.connect();
             }
             // 当有数据需要提交时,往服务器端写内容 也就是发起http请求需要带的参数
-            if (outputStr != null) {
+            if ((outputStr != null) || (outputStr.length()>0)){
                 OutputStream outputStream = _conn.getOutputStream();
                 // 注意编码格式，防止中文乱码
                 outputStream.write(outputStr.getBytes("UTF-8"));
@@ -159,7 +165,8 @@ public class Helper {
             }
             return result;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error(e.toString());
+            return result;
         }
 
     }

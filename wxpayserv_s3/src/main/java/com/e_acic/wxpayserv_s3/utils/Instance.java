@@ -1,4 +1,4 @@
-package com.e_acic.wxpayserv_s3;
+package com.e_acic.wxpayserv_s3.utils;
 import com.e_acic.wxpayserv_s3.utils.Helper;
 
 /*
