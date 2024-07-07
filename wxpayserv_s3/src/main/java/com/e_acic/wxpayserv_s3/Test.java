@@ -5,6 +5,8 @@ import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.apache.catalina.realm.UserDatabaseRealm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /*
 webpro
@@ -15,6 +17,7 @@ description:
 */
 @Slf4j
 public class Test {
+    private JdbcTemplate jdbcTemplate;
     public static void main(String[] args) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName("12");
