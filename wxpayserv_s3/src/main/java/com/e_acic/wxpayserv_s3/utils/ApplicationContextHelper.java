@@ -10,19 +10,23 @@ description:
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationContextHelper implements ApplicationContextAware {
 
-    private static ApplicationContext applicationContext;
+    public static ApplicationContext applicationContext;
+    public static ConfigurableEnvironment configurableEnvironment;
     @Override
     public void setApplicationContext(ApplicationContext arg0) throws BeansException {
         applicationContext = arg0;
-    }
+        configurableEnvironment = applicationContext.getBean(ConfigurableEnvironment.class);
 
+    }
+/*
     public static  <T> T getBean(Class<T> clsName) {
         T  object = applicationContext.getBean(clsName);
         return object;
-    }
+    }*/
 }

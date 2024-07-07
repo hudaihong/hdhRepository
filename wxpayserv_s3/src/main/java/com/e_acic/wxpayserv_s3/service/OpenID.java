@@ -1,23 +1,110 @@
 package com.e_acic.wxpayserv_s3.service;
 
+import com.e_acic.wxpayserv_s3.bean.UserInfo;
+import com.e_acic.wxpayserv_s3.utils.Helper;
 import com.e_acic.wxpayserv_s3.utils.Instance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+
 
 @RestController
-public class OpenID {
-    /*@Value("${wxrequest.appid}")
-    private String appid;
-    @Value("${server.port}")
-    private String port;
-*/
+public class OpenID{
 
+    /*
+   session_key	string	会话密钥
+   unionid	string	用户在开放平台的唯一标识符，若当前小程序已绑定到微信开放平台账号下会返回，详见 UnionID 机制说明。
+   errmsg	string	错误信息
+   openid	string	用户唯一标识
+   errcode	int32	错误码
+   description: 处理openid返回的数据，构造UserInfo entity,构造返回给小程序的json数据
+     */
+
+    public class WxOpenIDResp{
+        private  String session_key;
+        private String unionid;
+        private String errmsg;
+        private String openid;
+        private Integer errcode;
+
+        public WxOpenIDResp() {
+        }
+
+        public WxOpenIDResp(String session_ley, String unionid, String errmsg, String openid, Integer errcode) {
+            this.session_key = session_ley;
+            this.unionid = unionid;
+            this.errmsg = errmsg;
+            this.openid = openid;
+            this.errcode = errcode;
+        }
+
+        public String getSession_ley() {
+            return session_key;
+        }
+
+        public void setSession_ley(String session_ley) {
+            this.session_key = session_ley;
+        }
+
+        public String getUnionid() {
+            return unionid;
+        }
+
+        public void setUnionid(String unionid) {
+            this.unionid = unionid;
+        }
+
+        public String getErrmsg() {
+            return errmsg;
+        }
+
+        public void setErrmsg(String errmsg) {
+            this.errmsg = errmsg;
+        }
+
+        public String getOpenid() {
+            return openid;
+        }
+        @Value("request.encrykey")
+        private String encrykey;
+        public void setOpenid(String openid) {
+            this.openid = Helper.getInstance().Encrypt(this.openid,encrykey);
+        }
+
+        public Integer getErrcode() {
+            return errcode;
+        }
+
+        public void setErrcode(Integer errcode) {
+            this.errcode = errcode;
+        }
+
+        /*
+        处理数据库要保存的数据
+        * */
+        public UserInfo getEntity(){
+            UserInfo userInfo = new UserInfo();
+            userInfo.setOpenid(openid);
+            userInfo.setToken(unionid);
+            userInfo.setDeal_flag(false);
+            userInfo.setIn_time(new Timestamp(System.currentTimeMillis()));
+            return userInfo;
+        }
+
+
+        /*
+        处理向前端返回的json
+        * */
+        public String getRespToWxApp(){
+
+            String encrptOpenID = Helper.getInstance().Encrypt(openid,encrykey);
+            return null;
+        }
+    }
     @Autowired
     private ConfigurableEnvironment enviroment;
 

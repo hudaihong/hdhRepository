@@ -11,16 +11,13 @@ description:
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Data
-
 public class UserInfo implements Serializable {
-
-
-    public UserInfo() {
-
-    }
-
-    private String userName;
-    private String userPwd;
+    private Integer wid;
+    private String token;
+    private String openid;
+    private Boolean deal_flag;
+    private Timestamp in_time;
 }
