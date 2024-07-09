@@ -1,9 +1,11 @@
 package com.e_acic.wxpayserv_s3.service;
 
-import com.e_acic.wxpayserv_s3.bean.UserInfo;
+import com.e_acic.wxpayserv_s3.entity.OrderInfo;
+import com.e_acic.wxpayserv_s3.entity.UserInfo;
 import com.e_acic.wxpayserv_s3.utils.Helper;
 import com.e_acic.wxpayserv_s3.utils.Instance;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -16,6 +18,7 @@ import java.sql.Timestamp;
 
 
 @RestController
+@Slf4j
 public class OpenID{
 
     /*
@@ -75,6 +78,7 @@ public class OpenID{
         @Value("request.encrykey")
         private String encrykey;
         public void setOpenid(String openid) {
+
             this.openid = Helper.getInstance().Encrypt(this.openid,encrykey);
         }
 
@@ -89,32 +93,46 @@ public class OpenID{
         /*
         处理数据库要保存的数据
         * */
-        public UserInfo getEntity(){
+        public UserInfo getUserEntity(Timestamp in_time){
             UserInfo userInfo = new UserInfo();
             userInfo.setOpenid(openid);
             userInfo.setToken(unionid);
             userInfo.setDeal_flag(false);
-            userInfo.setIn_time(new Timestamp(System.currentTimeMillis()));
+            userInfo.setIn_time(in_time);
             return userInfo;
         }
 
+        public OrderInfo getOrderEntity(String order,Timestamp ordertime){
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setWx_order(order);
+            orderInfo.setToken(this.getUnionid());
+            orderInfo.setWx_ordertime(ordertime);
+            orderInfo.setWx_paystatu(0);
+            orderInfo.setWx_payfailreason("");
+            return orderInfo;
+        }
 
         /*
         处理向前端返回的json
         * */
-        public String getRespToWxApp(){
-
-            String encrptOpenID = Helper.getInstance().Encrypt(openid,encrykey);
-            return null;
+        public String getRespToWxApp(Timestamp in_time){
+            String result = "{\"openid\":\""+ this.openid+"\",\"token\":\""+this.getUnionid()+"\",\"in_time\":\""
+                    +in_time.toString()+ "\"}";
+            return result;
         }
     }
     @Autowired
     private ConfigurableEnvironment enviroment;
 
-
+    @Autowired
+    private OpenIDAware openIDAware;
     @RequestMapping("/getopenid")
-    //接收小程序发送的code(加密),向微信请求并返回加密的openid
-    public String getOpenID(String code,String token) {
+    /*接收小程序发送的code(加密),向微信请求并返回加密的openid
+     url: http://localhost:8080/wxpayserv_s3/getopenid?code=12222&token=22432423&order=3242342
+     *
+     */
+
+    public String getOpenID(String code,String token,String order) {
         String result = null;
 //          初次登录，需要向微信服务器获取openid
         if ((code != null) && (code.length() >0))  {
@@ -122,55 +140,46 @@ public class OpenID{
             String secretKey = enviroment.getProperty("request.secretcode");
             String grantType = enviroment.getProperty("request.granttype");
             String openIDUrl = enviroment.getProperty("request.openidurl");
-            String params = "appid=" + appid + "&secret=" + secretKey + "&js_code=" + code + "&grant_type=" + grantType;
-            result = Instance.helper.httpsRequest(openIDUrl,"get",null);
+            String params = "?appid=" + appid + "&secret=" + secretKey + "&js_code=" + code + "&grant_type=" + grantType;
+            openIDUrl += params;
+            result = Instance.helper.HttpsRequest(openIDUrl,"get",null);
             if ((result != null) || (result.length() > 0)) {
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 WxOpenIDResp wxOpenIDResp = new Gson().fromJson(result,WxOpenIDResp.class);
-                result = wxOpenIDResp.getRespToWxApp();
+                result = wxOpenIDResp.getRespToWxApp(timestamp);
+                try {
+                    UserInfo userInfo = wxOpenIDResp.getUserEntity(timestamp);
+                    openIDAware.CreateUser(userInfo);
+                    openIDAware.CreateOrder(order,userInfo.getToken(),new Timestamp(System.currentTimeMillis()));
+                } catch (Exception e) {
+                    log.error("获取openid后保存失败:"+e.toString());
+                }
             }
         } else if ((token != null) || (token.length() >0)) { //后台查询token
 
+            try {
+                result =  openIDAware.GetUserByToken(token);
+                openIDAware.CreateOrder(order,token,new Timestamp(System.currentTimeMillis()));
+            } catch (Exception e){
+                log.error("查询到token,保存order信息失败:"+e.toString());
+            }
         }
 
         return result;
-        /*   String sr = req.sendGet(openIDUrl, params);
-        JSONObject json = JSONObject.fromObject(sr);
 
-// getting session_key
-        String sessionKey = json.get("session_key").toString();
-
-// getting open_id
-        String openId = json.get("openid").toString();
-
-// decoding encrypted info with AES
-        try {
-            String result = AesCbcUtil.decrypt(encryptedData, sessionKey, iv, "UTF-8");
-            if (null != result && result.length() > 0) {
-                map.put("status", 1);
-                map.put("msg", "解密成功");
-
-                JSONObject userInfoJSON = JSONObject.fromObject(result);
-                Map userInfo = new HashMap();
-                userInfo.put("openId", userInfoJSON.get("openId"));
-                userInfo.put("nickName", userInfoJSON.get("nickName"));
-                userInfo.put("gender", userInfoJSON.get("gender"));
-                userInfo.put("city", userInfoJSON.get("city"));
-                userInfo.put("province", userInfoJSON.get("province"));
-                userInfo.put("country", userInfoJSON.get("country"));
-                userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl"));
-                userInfo.put("unionId", userInfoJSON.get("unionId"));
-                map.put("userInfo", userInfo);
-                return map;
-            }
+    }
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        map.put("status", 0);
-        map.put("msg", "解密失败");
-        return map;
-        */
-
+    /*
+    * 传送openid，appid等信息给S3  返回支付链接并且把此链接返回给前段
+    * 前端用此支付链接访问s3获取到支付参数
+    * 前端使用支付参数拉起微信支付
+    * */
+    private String PostPayInfoToS3(String openid,String appid,String order){
+        String result = "";
+        String postoidurl = enviroment.getProperty("request.postoidurl");
+        postoidurl += "?openid="+openid+"&appid="+appid+"&order="+order;
+        result = Helper.getInstance().HttpsRequest(postoidurl,"get","");
+        return result;
     }
 }

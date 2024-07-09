@@ -107,7 +107,7 @@ public class Helper {
     /*
     发送https请求，可能需要验证证书
     * */
-    public  String httpsRequest(String requestUrl, String requestMethod, String outputStr)  {
+    public  String HttpsRequest(String requestUrl, String requestMethod, String outputStr)  {
         // 初始化一个json对象
         String result = null;
 
