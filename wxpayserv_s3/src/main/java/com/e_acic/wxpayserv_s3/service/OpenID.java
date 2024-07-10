@@ -145,7 +145,7 @@ public class OpenID{
         /*
         处理向前端返回的json
         * */
-        public String getRespToWxApp(Timestamp in_time){
+        public String getRespToWxApp(long in_time){
             String result = null;
             if (getErrcode() == 0){
                 result = "{\"openid\":\""+ this.getOpenid()+"\",\"token\":\""+this.getUnionid()+"\",\"in_time\":"
@@ -195,22 +195,26 @@ public class OpenID{
             openIDUrl += params;
             result = Instance.helper.HttpsRequest(openIDUrl,"get",null);
             if ((result != null) && (result.length() > 0)) {
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                long ltime = System.currentTimeMillis();
                 WxOpenIDResp wxOpenIDResp = new Gson().fromJson(result,WxOpenIDResp.class);
+                //由于没有绑定到微信开放平台，小程序无法获取unionid, errcode, 调试模拟生成
+                wxOpenIDResp.setErrcode(0);
+                wxOpenIDResp.setUnionid(String.valueOf(System.currentTimeMillis()));
+
                 if (wxOpenIDResp.getErrcode() == 0){  //微信返回code为0表正常获取
                     String s3backurl = PostPayInfoToS3(wxOpenIDResp.getOpenid(),appid,order);
                     wxOpenIDResp.setS3backurl(s3backurl);
                     wxOpenIDResp.encrpt();
-                    result = wxOpenIDResp.getRespToWxApp(timestamp);
+                    result = wxOpenIDResp.getRespToWxApp(ltime);
                     try {
-                        UserInfo userInfo = wxOpenIDResp.getUserEntity(timestamp);
+                        UserInfo userInfo = wxOpenIDResp.getUserEntity(new Timestamp(ltime));
                         openIDAware.CreateUser(userInfo);
                         openIDAware.CreateOrder(order,userInfo.getToken(),new Timestamp(System.currentTimeMillis()));
                     } catch (Exception e) {
                         log.error("获取openid后保存失败:"+e.toString());
                     }
                 }else {
-                    wxOpenIDResp.getRespToWxApp(timestamp);
+                    wxOpenIDResp.getRespToWxApp(ltime);
                 }
             }
         } else if ((token != null) && (token.length() >0)) { //后台查询token
@@ -224,7 +228,7 @@ public class OpenID{
                 wxOpenIDResp.setUnionid(userInfo.getToken());
                 wxOpenIDResp.setErrcode(0);
                 wxOpenIDResp.setS3backurl(Helper.getInstance().Encrypt(s3backurl));
-                result = wxOpenIDResp.getRespToWxApp(new Timestamp(System.currentTimeMillis()));
+                result = wxOpenIDResp.getRespToWxApp(userInfo.getIn_time().getTime());
                 openIDAware.CreateOrder(order,token,new Timestamp(System.currentTimeMillis()));
             } catch (Exception e){
                 log.error("查询到token,保存order信息失败:"+e.toString());

@@ -5,7 +5,7 @@ spring:
     url: jdbc:mysql://localhost:3306/wx
     username: root
     password: Hu@670911
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 server:
   port: 8081
   servlet:
@@ -13,8 +13,8 @@ server:
   tomcat:
     uri-encoding: UTF-8
 request:
-  appid: wx524f7715c25f1d55
-  secretcode: 0a275861b87f699645290812b7750f9a
+  appid: lYKjqULk9pZfHrfJcCv3I49z+Aoalw/2rN3hahoO7Lw=
+  secretcode: Jj88T7qXUUTZsUbyJj+zfY9UOwlCg0Am0vcmdQr+wG5k2ODJRLBfiOQSaG9223BK
   granttype: authorization_code
   openidurl: https://api.weixin.qq.com/sns/jscode2session
   postoidurl: https://www.s3.com/s3serv

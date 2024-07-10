@@ -84,7 +84,8 @@ public class OpenIDAware {
     @Transactional
     public Boolean CreateUser(UserInfo userInfo)throws Exception{
         init();
-        Integer updata = jdbcTemplate.update("replace into wx.wx_user values(null,?,?,?,?)",userInfo.getToken(),userInfo.getOpenid(),userInfo.getIn_time(),userInfo.getDeal_flag());
+        Integer updata = jdbcTemplate.update("replace into wx.wx_user(token,openid,in_time,deal_flag,session_key) " +
+                "values(?,?,?,?,?)",userInfo.getToken(),userInfo.getOpenid(),userInfo.getIn_time(),userInfo.getDeal_flag(),userInfo.getSession_key());
         return  updata>0?true:false;
     }
 
@@ -108,7 +109,7 @@ public class OpenIDAware {
     @Transactional
     public Boolean CreateOrder(String order, String token,Timestamp ordertime)throws Exception{
         init();
-        Integer update = jdbcTemplate.update("insert into wx.wx_order(token,wx_order,wx_ordertime,wx_paysuccess) values(?,?,?,false)",token,order,ordertime);
+        Integer update = jdbcTemplate.update("insert into wx.wx_order(token,wx_order,wx_ordertime,wx_paystatu) values(?,?,?,false)",token,order,ordertime);
         return update > 0?true:false;
     }
 
