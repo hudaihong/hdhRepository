@@ -23,12 +23,26 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
 public class OpenIDAware {
+    public OpenIDAware() {
+
+    }
+
     @Autowired
     private  JdbcTemplate jdbcTemplate;
+    /*
+     * 错误码	错误码取值	解决方案
+     40029	code 无效	js_code无效
+     45011	api minute-quota reach limit  mustslower  retry next minute	API 调用太频繁，请稍候再试
+     40226	code blocked	高风险等级用户，小程序登录拦截 。风险等级详见用户安全解方案
+     -1	system error	系统繁忙，此时请开发者稍候再试
+     * */
+
     private void init(){
         if (jdbcTemplate == null){
             jdbcTemplate = ApplicationContextHelper.applicationContext.getBean(JdbcTemplate.class);
@@ -51,24 +65,21 @@ public class OpenIDAware {
     }
 
     /*
-    *  `token` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `openid` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `in_time` timestamp(6) NULL DEFAULT NULL,
-  `deal_flag` tinyint DEFAULT '0' COMMENT '是否正在处理此用户的支付，为true表示正在处理',
+    *
 
     存在则修改，不存在则新增
     mysql: replace into wx.wx_user values(null,?,?,?,?)
     返回如果有行被删除后增加，则返回大于1，如果只是增加，返回为1
     oracle : 存在则修改，不存在则新增
     merge into wx.wxuser t1
-using (select ? as token,? as openid,? as in_time,? as deal_flag  from dual) t2
-on ( t1.token = t2.token)
-when matched then
-    update
-    set t1.openid = t2.openid,t1.in_time = t2.in_time,t1.deal_flag=t2.deal_flag
-when not matched then
-    insert (token,openid,in_time,deal_flag)
-    values (t2.token,t2.openid,t2.in_time,t2.deal_flag);
+        using (select ? as token,? as openid,? as in_time,? as deal_flag  from dual) t2
+        on ( t1.token = t2.token)
+        when matched then
+            update
+            set t1.openid = t2.openid,t1.in_time = t2.in_time,t1.deal_flag=t2.deal_flag
+        when not matched then
+            insert (token,openid,in_time,deal_flag)
+            values (t2.token,t2.openid,t2.in_time,t2.deal_flag);
      */
     @Transactional
     public Boolean CreateUser(UserInfo userInfo)throws Exception{
@@ -77,24 +88,20 @@ when not matched then
         return  updata>0?true:false;
     }
 
-    public String GetUserByToken(String token)throws Exception{
+    public UserInfo GetUserByToken(String token)throws Exception{
         String result = "";
-
         init();
         SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet("select openid,in_time from wx.wx_user  where token=?",token);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        LocalDateTime localDateTime = timestamp.toLocalDateTime().minusHours(2);
-
+        UserInfo userInfo = new UserInfo();
         while(sqlRowSet.next()) {
-            timestamp = sqlRowSet.getTimestamp("in_time");
-            //token超过2小时时效,重新请求
-            if (timestamp.compareTo(Timestamp.valueOf(localDateTime)) <0 ){
-                return "";
-            }
-            result += "{\"openid\":\"" + sqlRowSet.getString("openid") + "\",\"in_time\":\"" + sqlRowSet.getTimestamp("in_time").toString()
-                    + "\",\"appid\":\""+appid+"\"}";
+            userInfo.setOpenid(sqlRowSet.getString("openid"));
+            userInfo.setToken(sqlRowSet.getString("token"));
+            userInfo.setIn_time(sqlRowSet.getTimestamp("in_time"));
+
+            /*result += "{\"openid\":\"" + sqlRowSet.getString("openid") + "\",\"in_time\":" + sqlRowSet.getTimestamp("in_time")
+                    + ",\"appid\":\""+appid+"\"}";*/
         }
-        return result;
+        return userInfo;
     }
 
     //初次请求openid传入的订单order

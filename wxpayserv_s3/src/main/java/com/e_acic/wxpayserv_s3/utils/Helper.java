@@ -6,9 +6,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -26,7 +23,7 @@ public class Helper {
     }
 
     //密钥 (需要前端和后端保持一致)`
-    private  final String KEY = "abcdefgabcdefg12";
+    private  final String sKey = "abcdefgabcdefg12";
     private static Helper instance = null;
     //    线程安全的单例模式
     public static Helper getInstance() {
@@ -46,7 +43,7 @@ public class Helper {
     /**
      * 加密
      */
-    public  String Encrypt(String sSrc, String sKey)  {
+    public  String Encrypt(String sSrc)  {
         if (sKey == null) {
             log.error("Key为空null");
             return null;
@@ -76,7 +73,7 @@ public class Helper {
     /**
      * 解密
      */
-    public  String Decrypt(String sSrc, String sKey)  {
+    public  String Decrypt(String sSrc)  {
 
             // 判断Key是否正确
             if (sKey == null) {
@@ -114,15 +111,14 @@ public class Helper {
         // 创建SSLContext对象，并使用我们指定的信任管理器初始化
 
         try {
-            TrustManager[] tmManagers = new TrustManager[0];
+           /* TrustManager[] tmManagers = new TrustManager[0];
             SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
             sslContext.init(null, tmManagers, new java.security.SecureRandom());
-            // 从上述SSLContext对象中得到SSLSocketFactory对象
-            SSLSocketFactory sslSocket = sslContext.getSocketFactory();
+            SSLSocketFactory sslSocket = sslContext.getSocketFactory();*/
             URI _uri = new URI(requestUrl);
             URL _url = _uri.toURL();
             HttpsURLConnection _conn = (HttpsURLConnection) _url.openConnection();
-            _conn.setSSLSocketFactory(sslSocket);
+            //_conn.setSSLSocketFactory(sslSocket);
             _conn.setInstanceFollowRedirects(true);
             //设置超时时间为10秒
             _conn.setConnectTimeout(10000);
@@ -132,13 +128,13 @@ public class Helper {
             _conn.setDoInput(true);
             _conn.setUseCaches(false);
             // 设置请求方式 GET/POST
-            _conn.setRequestMethod(requestMethod);
+            _conn.setRequestMethod(requestMethod.toUpperCase());
             // 不考虑大小写。如果两个字符串的长度相等，并且两个字符串中的相应字符都相等（忽略大小写），则认为这两个字符串是相等的。
             if ("GET".equalsIgnoreCase(requestMethod)) {
                 _conn.connect();
             }
             // 当有数据需要提交时,往服务器端写内容 也就是发起http请求需要带的参数
-            if ((outputStr != null) || (outputStr.length()>0)){
+            if ((outputStr != null) && (outputStr.length()>0)){
                 OutputStream outputStream = _conn.getOutputStream();
                 // 注意编码格式，防止中文乱码
                 outputStream.write(outputStr.getBytes("UTF-8"));
@@ -202,7 +198,7 @@ public class Helper {
                 _conn.connect();
             }
             // 当有数据需要提交时,往服务器端写内容 也就是发起http请求需要带的参数
-            if (outputStr != null) {
+            if ((outputStr != null) && (outputStr.length()>0)) {
                 OutputStream outputStream = _conn.getOutputStream();
                 // 注意编码格式，防止中文乱码
                 outputStream.write(outputStr.getBytes("UTF-8"));

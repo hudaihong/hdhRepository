@@ -8,12 +8,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8081
+  servlet:
+    context-path: /wxpayserv_s3
   tomcat:
     uri-encoding: UTF-8
 request:
-  encrykey: abcdefgabcdefg12
-  appid: 12331313
-  secretcode: 32qweqweq
+  appid: wx524f7715c25f1d55
+  secretcode: 0a275861b87f699645290812b7750f9a
   granttype: authorization_code
   openidurl: https://api.weixin.qq.com/sns/jscode2session
   postoidurl: https://www.s3.com/s3serv
